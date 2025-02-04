@@ -22,6 +22,62 @@ function toggleLogin() {
                                 <span class="d-sm-none">Perfil</span>`;
     }
 }
+function showDangerAlert(texto) {
+    const toastEl = document.getElementById('loginToast');
+    const texto_toast = document.getElementById('texto-toast')
+    texto_toast.textContent=texto
+    console.log(toastEl.classList.toString())
+    if (toastEl.classList.contains('bg-success')){
+        toastEl.classList.replace('bg-success','bg-danger')
+        console.log('I am the path , the leader and the father')
+    }
+    console.log("I'm in danger")
+   
+    toastEl.style.animation = 'none';
+    void toastEl.offsetWidth;
+    toastEl.style.animation = null;
+    
+   
+    const toast = new bootstrap.Toast(toastEl, {
+        animation: false,
+        autohide: false
+    });
+    toast.show();
+    
+
+    setTimeout(() => {
+        toast.hide();
+    }, 3000);
+}
+
+
+
+function showSucessAlert(texto) {
+    const toastEl = document.getElementById('loginToast');
+    const texto_toast = document.getElementById('texto-toast')
+    texto_toast.textContent=texto
+    if (toastEl.classList.contains('bg-danger')){
+        toastEl.classList.replace('bg-danger','bg-sucess')
+        console.log('I am the path , the leader and the father')
+    }
+   
+    toastEl.style.animation = 'none';
+    void toastEl.offsetWidth;
+    toastEl.style.animation = null;
+    
+   
+    const toast = new bootstrap.Toast(toastEl, {
+        animation: false,
+        autohide: false
+    });
+    toast.show();
+    
+
+    setTimeout(() => {
+        toast.hide();
+    }, 3000);
+}
+
 
 
 function showLoginAlert() {
@@ -68,7 +124,7 @@ function createCalendar() {
         
 
         const day = document.createElement('button');
-        day.className = 'col border p-2';
+        day.className = 'col border p-2 botao';
         day.id = `diaSA${o}`;
         day.textContent = o;
         
@@ -82,29 +138,47 @@ function createCalendar() {
 createCalendar();
 
 let primeiraVez = true
-let botaoAtual; 
+let botaoAtual = null; 
 const desabilitador = document.getElementById('desabilitador')
+let botoes = document.querySelectorAll('.botao')
 function toggleDesabilitador(btn){
+    if (btn.textContent == '-'){
+            showDangerAlert('Por favor selecione uma data válida')
+            return
+    } 
     if (primeiraVez){
         primeiraVez = false
-        botaoAtual = btn.texto
+        botaoAtual = btn.textContent
+      
         if (desabilitador.hasAttribute('disabled')){
             desabilitador.removeAttribute('disabled')
     
         }
     }
-    if (botaoAtual != btn.id){
-        botaoAtual.
-        botaoAtual = btn
-        btn.setAttribute('selected','true')
+    if (botaoAtual != btn.textContent){
+        botoes = document.querySelectorAll('.botao')
+        for(let i=0;i<botoes.length;i++){
+            if (botoes[i].classList.contains('selecionado')){
+                botoes[i].classList.remove('selecionado')
+            }
+        if (btn.textContent == '-'){
+
+        }    
+        btn.classList.add('selecionado')
+        botaoAtual = btn.textContent
+        }
     }
     else {
-        desabilitador.removeAttribute('disabled')
+        if (desabilitador.hasAttribute('disabled')){
+            desabilitador.removeAttribute('disabled')
+    
+        }
+        btn.classList.remove('selecionado')
+        botaoAtual = null
     }
 
-
+atualizarData()
 }
-
 // Adiciona um único listener no container pai
 calenda.addEventListener('click', (event) => {
     const botaoClicado = event.target.closest('button');
@@ -119,3 +193,78 @@ calenda.addEventListener('click', (event) => {
         toggleDesabilitador(botaoClicado)
     }
 });
+
+
+
+
+function atualizarData(){
+    const data = document.getElementById('dataText')
+    data.innerText = `${botaoAtual}/01/2025`
+}
+let agendamentos = []
+
+
+
+function agendarPoggers(){
+        
+}
+
+let count = 1
+
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+const appendAlert = (message, type) => {
+  const wrapper = document.createElement('div')
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    '</div>'
+  ].join('')
+
+  alertPlaceholder.append(wrapper)
+}
+
+const alertTrigger = document.getElementById('liveAlertBtn')
+if (alertTrigger) {
+  alertTrigger.addEventListener('click', () => {
+    if (count%3==0){
+        appendAlert('Houve um erro ao agendar sua consulta', 'danger')
+        SetNotifação('Houve um erro ao agendar sua consulta')
+        console.log('AAA')
+    }
+    else{
+        appendAlert('Sua consulta foi agendada com sucesso', 'success')
+        SetNotifação('Sua consulta foi agendada com sucesso')
+        console.log('AA')
+}
+count+=1
+
+}
+
+
+
+)
+}
+calenda.setAttribute
+function SetNotifação(texto){
+    coco = document.getElementById('cocoOver')
+    coco.setAttribute('data-bs-content', texto)
+    noti = document.getElementById('notificacao')
+    noti.classList.remove('visually-hidden')
+}
+
+
+function removeNotifications(){
+    noti = document.getElementById('notificacao')
+    noti.classList.add('visually-hidden')
+    SetNotifação('')
+}
+
+
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+
+
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

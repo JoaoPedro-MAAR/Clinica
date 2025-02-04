@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm bg-success bg-body-success fixed-top" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-sm bg-success bg-body-success fixed-top" data-bs-theme="white">
             <div class="container-fluid">
                 <!-- Logo -->
                 <a class="navbar-brand" href="#">
@@ -30,19 +30,23 @@
                     <div class="d-flex flex-column flex-sm-row w-100 justify-content-between">
                         <!-- Links -->
                         <div class="d-flex flex-column flex-sm-row gap-3 py-2 py-sm-0">
-                            <a href="sobre" class="nav-link text-light">Sobre nós</a>
-                            <a href="agendamento" class="nav-link text-light">Agendamento</a>
+                            <a href="#sobre" class="nav-link text-light">Sobre nós</a>
+                            <a href="#agendamento" class="nav-link text-light">Agendamento</a>
                         </div>
         
                         <!-- Ícones -->
                         <div class="d-flex flex-column flex-sm-row gap-3 py-2 py-sm-0">
                             <a href="#" class="nav-link text-light d-flex align-items-center gap-2">
-                                <img src="imagens/calendar2-plus.svg" alt="Agendar" width="30" height="24">
-                                <span class="d-sm-none">Agendar</span>
+                                <button type="button" class="btn btn-success position-relative" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Notifcações" onclick="removeNotifications" id="cocoOver">
+                                    <img src="imagens/bell-fill.svg" alt="Agendar" width="30" height="24">
+                                    <span class="position-absolute top-25 start-70 translate-middle p-2 bg-danger border border-light rounded-circle visually-hidden" id="notificacao">
+                                        
+                                      </span>
+                                  </button>
                             </a>
                             <a href="#" class="nav-link text-light d-flex align-items-center gap-2">
-                                <img src="imagens/calendar2-heart.svg" alt="Agendamentos" width="30" height="24">
-                                <span class="d-sm-none">Agendamentos</span>
+                                <img src="imagens/calendar2-plus.svg" alt="Agendar" width="30" height="24">
+                                <span class="d-sm-none">Agendar</span>
                             </a>
                             <a onclick="toggleLogin"id='loginIcon'href="#" class="nav-link text-light d-flex align-items-center gap-2">
                                 <img src="imagens/person-circle.svg" alt="Perfil" width="30" height="24">
@@ -55,6 +59,7 @@
         </nav>
     </header>
     <main>
+        <div id="liveAlertPlaceholder" class="alert-box"></div>
         <div id="autoCarousel" data-bs-interval="3000" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner h-100">
                 <div class="carousel-item active h-100">
@@ -141,26 +146,23 @@
                    <div id="form">
                     <form>
                         <fieldset id="desabilitador"disabled="">
-                          <legend>Agende já</legend>
+                          <legend><div class="text-center">Agende<div id="data">Data selecionada: <p id="dataText">--/--/--</p></div></div></legend>
                           <div class="mb-3">
-                            <label for="" class="form-label">Disabled input</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                            <label for="" class="form-label col-sm">Motivo  <button type="button" class="btn btn-white" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="Nos descreva seu problema">
+                                <img src="imagens/info-circle-fill.svg" alt="Agendar" width="20" height="20" class="mb-1">
+                              </button></label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Motivo por que quer entrar em contato">
                           </div>
                           <div class="mb-3">
-                            <label for="disabledSelect" class="form-label">Disabled select menu</label>
+                            <label for="disabledSelect" class="form-label">Profissional </label>
                             <select id="disabledSelect" class="form-select">
-                              <option>Disabled select</option>
+                              <option>Nutricionista</option>
+                              <option>Psicologo</option>
+                              <option>Otorrinolaringologista</option>
                             </select>
                           </div>
-                          <div class="mb-3">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled="">
-                              <label class="form-check-label" for="disabledFieldsetCheck">
-                                Can't check this
-                              </label>
-                            </div>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Submit</button>
+
+                          <button type="button" class="btn btn-primary bg-success" onclick="agendarPoggers" id="liveAlertBtn">Agendar</button>
                         </fieldset>
                       </form>
 
@@ -182,15 +184,72 @@
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="loginToast" class="toast bg-success text-white fade-out-animation" role="alert">
             <div class="d-flex">
-                <div class="toast-body">
-                    <i class="bi bi-check-circle-fill me-2"></i>
+                <div class="toast-body" id="texto-toast">
                     Login realizado com sucesso!
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
         </div>
     </div>
+    <footer class="bd-top w-90 bg-success">
+        <div class="row row-cols-5 p-2 footer w-90" id="fatfooter">
+            <DIV id="linkslocais text-start">
+                <div class="titulosfooter">
+                    <strong>Link dos Sites</strong>
+                </div>
+                <div><a href="#">Home</a></div>
+                <div><a href="#sobre">Sobre</a></div>
+                <div><a href="#agendamento">Agendamento</a></div>
+            </DIV>
+            <div id="infoCompany">
+                <div class="titulosfooter">
+                    <strong>Clinica-TSI</strong>
+                </div>
+                <div><a href="">Sobre Clinica</a></div>
+                <div><a href="">Certicação </a></div>
+                <div><a href="">Reviews</a></div>
+            </div>
+            <div id="contatos">
+                <div id="contato">
+                    <div class="titulosfooter">
+                        <strong>Contato</strong>
+                    </div>
+                    <div>Rua Exemplo, 123 - Bairro, Cidade/UF</div>
+                    <div>(xx) xxxx-xxxx</div>
+                     <div><a href="mailto:contato@clinica.com">contato@clinica.com</a></div>
+                </div>    
+            </div>
+            <div id="horarios">
+                <strong>Horário de Funcionamento:</strong>
+                <div>Segunda a Sexta: 08:00 - 18:00</div>
+                <p>Sábados: 08:00 - 12:00</p>
+            </div>
+            <div id="linksLegais">
+                <div class="titulosfooter">
+                    <strong>Politicas</strong>
+                </div>
+                <div><a href="/politica-de-privacidade">Política de Privacidade</a></div>
+                <div><a href="/termos-de-uso">Termos de Uso</a></div>
+                <div><a href="/faq">FAQ</a></div>
+            </div>
+            
+        </div>
+        <div class="row row-cols-3 text-center">
+            <div><img src="imagens/clipboard2-pulse.svg" alt="Logo" width="100" height="100"></div>
+            <div><img src="imagens/capsule.svg" alt="Logo" width="100" height="100"></div>
+            <div><img src="imagens/prescription.svg" alt="Logo" width="100" height="100"></div>
+        </div>    
+        <div class="text-center mt-5">
+            <div><h2>Clinica-TSI</h2></div>
+        </div>
+    </footer>
 <!-- Apenas ESSE script é necessário (Bootstrap 5.3.3 completo + Popper embutido) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" 
+        crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="index.js"></script>
 </body>

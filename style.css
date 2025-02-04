@@ -67,6 +67,21 @@
     border-radius: 15px;
 }
 
+.alert-box{
+    position:fixed;
+  top:10vh;
+  left:50vw;
+  transform:translateX(-50%);
+  z-index: 999999999;
+  display: flex ;
+  flex-direction: column;
+  align-items: center;}
+
+
+.selecionado {
+    background-color: #198754;
+}
+
 .lock-overlay-hidden {
     display: none !important; /* Força a sobrescrita */
 }
@@ -96,10 +111,36 @@
     border: none;
 }
 
+.custom-tooltip {
+    --bs-tooltip-bg: green;
+    --bs-tooltip-color: var(--bs-white);
+  }
 
 .fade-out-animation {
     animation: fadeOut 3s ease-out forwards;
     opacity: 0;
+}
+
+
+footer {
+    color:#dee2e6;
+    border-top: 20px solid #09502f;
+    height: 45vh;
+
+    
+}
+
+footer a{
+    color:#dee2e6;
+    text-decoration: none;
+}
+
+footer a:hover{
+    text-decoration: underline;
+}
+#fatfooter{
+    width: 90%!important;
+    margin-left: 5%;
 }
 
 @keyframes fadeOut {
